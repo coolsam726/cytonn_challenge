@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProcessStatements;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,5 +25,10 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+    public function sendStatements(Request $request) {
+        ProcessStatements::dispatch();
+        session()->flash("success", "All users will receive email statements");
+        return redirect()->to(route('home'));
     }
 }
